@@ -1,0 +1,329 @@
+{
+  "Home": {
+    "great": "做一个开心的吃货,尽情享受这大好河山~_~"
+  },
+  "lblist":[
+    {"img":"../../static/food.jpg"},
+    {"img":"../../static/food.jpg"},
+    {"img":"../../static/food.jpg"},
+    {"img":"../../static/food.jpg"}
+  ],
+  "orderMain": [
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "老婆饼",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    },
+    {
+      "type":"套餐",
+      "detail": [
+        {
+          "id": "套餐1",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐2",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        },{
+          "id": "套餐3",
+          "name": "水煮肉片",
+          "price":23,
+          "img": "../../static/food.jpg",
+          "desc":"好吃不贵的水煮肉片~~"
+        }
+      ]
+    }
+  ],
+  "orderList": [
+      {"seri_num": "14030130040",
+        "date": "2017/11/15",
+        "flag": "1"
+      },
+      {"seri_num": "14030130037",
+        "date": "2017/11/15",
+        "flag": "1"
+      },
+      {"seri_num": "14030130036",
+        "date": "2017/11/15",
+        "flag": "1"
+      },
+      {"seri_num": "14030130044",
+        "date": "2017/11/15",
+        "flag": "1"
+      },
+      {"seri_num": "14030130031",
+        "date": "2017/11/13",
+        "flag": "2"
+      },
+      {"seri_num": "14030130030",
+        "date": "2017/11/12",
+        "flag": "2"
+      }
+  ],
+  "Order": {
+    "seri_num": "14030130040",
+    "orderdetail": [
+                {
+                  "img": "../../static/food.jpg",
+                  "name": "千叶豆腐",
+                  "price": "18",
+                  "flag": "1"
+                },
+                {
+                  "img": "../../static/food.jpg",
+                  "name": "千叶豆腐",
+                  "price": "18",
+                  "flag": "1"
+                },
+                {
+                  "img": "../../static/food.jpg",
+                  "name": "千叶豆腐",
+                  "price": "18",
+                  "flag": "2"
+                }
+          ]
+      }
+}
