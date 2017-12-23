@@ -2,6 +2,24 @@
   "Home": {
     "great": "做一个开心的吃货,尽情享受这大好河山~_~"
   },
+  "youhuiCard": [
+    {"cardId": "14030130040",
+      "value":5,
+      "limit":10
+    },
+    {"cardId": "14030130041",
+      "value":5,
+      "limit":10
+    },
+    {"cardId": "14030130042",
+      "value":10,
+      "limit":20
+    },
+    {"cardId": "14030130043",
+      "value":20,
+      "limit":50
+    }
+  ],
   "lblist":[
     {"img":"../../static/food.jpg"},
     {"img":"../../static/food.jpg"},
@@ -277,10 +295,25 @@
       ]
     }
   ],
+  "findbyordernum":{
+    "count":46,
+    "eattype":2,
+    "food":[
+      {"count":1,"name":"水煮肉片","price":23},
+      {"count":2,"name":"水煮肉片","price":23}
+    ],
+    "limit":10,
+    "value":5
+  },
   "orderList": [
       {"seri_num": "14030130040",
         "date": "2017/11/15",
-        "flag": "1"
+        "flag": "1",
+        "food":[
+          {"count":1,"price":5,"id":"14030130040","name":"水煮肉片"},
+          {"count":1,"price":5,"id":"14030130041","name":"水煮肉片"},
+          {"count":1,"price":5,"id":"14030130042","name":"水煮肉片"}
+        ]
       },
       {"seri_num": "14030130037",
         "date": "2017/11/15",

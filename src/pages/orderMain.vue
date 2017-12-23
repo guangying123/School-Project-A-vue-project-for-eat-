@@ -61,12 +61,12 @@
         <img src="../../static/buycar.png" class="buycar" @click="showcardetail"/>
         <div class="mycount">总计：￥<span class="count">{{count}}</span>元</div>
       </div>
-      <div class="payright">
+      <div class="payright" @click="goforPay">
         去支付
       </div>
     </div>
     <div v-transfer-dom>
-      <Alert v-model="alertShow" title="出错啦~" button-text="确定" content="数据拉取失败"  hide-on-blur></Alert>
+      <Alert v-model="alertShow" title="出错啦~" button-text="确定" :content="msg"  hide-on-blur></Alert>
     </div>
   </div>
 </template>
@@ -96,7 +96,8 @@
             lazyloadflag: true,
             buycarcount:0,
             buycarcont:[],
-            showcarde:false
+            showcarde:false,
+            msg: ""
           }
       },
     components:{
@@ -106,7 +107,33 @@
       Spinner
     },
     methods: {
+      goforPay() {
+          console.log('goForPay')
+        if(this.buycarcont.length == 0) {
+          this.alertShow = true;
+          this.msg = "请先选择商品";
+          return;
+        }
+        this.$router.push('/goforPay');
+      },
+      setcarfoodinLocalStorage() {  //设置购物车里面的东西到localStorage
+        if(this.buycarcont.length > 0) {
+          var buyfood = "";
+          let self = this;
+          this.buycarcont.forEach(val => {
+            let pinjie ="id="+val.id+"&"+"name="+val.name+"&"+"price="+val.price+"&"+"count="+val.count+"#";
+            buyfood+=pinjie;
+          })
+          buyfood = buyfood.slice(0,buyfood.length-1);
+          localStorage.setItem('carfood',buyfood);
+          localStorage.setItem("buycarcount",self.buycarcount);
+        }else {
+            localStorage.removeItem("carfood");
+            localStorage.removeItem("buycarcount");
+        }
+      }  ,
       cardeal(e) { // 0代表减  1代表加
+        let self = this;
           let evedata = e.target.dataset;
           let fdid = evedata.fid;
           let sw = evedata.switcher;
@@ -115,8 +142,12 @@
             if(val.id == fdid) {
                 if(sw == 1){
                     val.count++;
+                   self.buycarcount++;
+                   self.count += Number(val.price);
                 }else{
                     val.count--;
+                    self.buycarcount--;
+                    self.count-= Number(val.price);
                     if(val.count == 0) {
                       delinex = index;
                     }
@@ -126,11 +157,8 @@
           });
         if(delinex > -1) {
           this.buycarcont.splice(delinex,1);
-
-          // 每次加减操作时清除localStorage中的商品
-
-
         }
+        self.setcarfoodinLocalStorage();
       },
       clearall() { // 清空购物车 并且要清localStorage
         this.buycarcont = [];
@@ -171,8 +199,6 @@
              self.count+= temresu["count"]*temresu["price"];
              return temresu;
            })
-           console.log('!!!')
-           console.log(this.buycarcont);
          }
        },
       addtobuycar(e) {
@@ -192,7 +218,6 @@
             this.buycarcont = [{id,price,name,count},...this.buycarcont]
           }
           this.buycarcount++;
-          console.log(this.buycarcont)
       },
       lazyload() {  // 为提高优化，前端做分批处理，即对菜品这一块，每次仅渲染个菜品，实现下滑获取更多
         var orderMainShow =  document.querySelector('.orderMainShow');
@@ -244,23 +269,12 @@
           self.getbuycarfromStorage();
       }).catch(err => {
           self.alertShow = true;
+          self.msg = "数据拉取失败";
           console.log(err);
       })
     },
     beforeDestroy() {
-      var buyfood = "";
-      if(this.buycarcont.length > 0) {
-          let self = this;
-        this.buycarcont.forEach(val => {
-          let pinjie ="id="+val.id+"&"+"name="+val.name+"&"+"price="+val.price+"&"+"count="+val.count+"#";
-          buyfood+=pinjie;
-        })
-        buyfood = buyfood.slice(0,buyfood.length-1);
-        localStorage.setItem('carfood',buyfood);
-        localStorage.setItem("buycarcount",self.buycarcount);
-        console.log('@@')
-        console.log(self.buycarcount)
-      }
+        this.setcarfoodinLocalStorage();
     }
   }
 

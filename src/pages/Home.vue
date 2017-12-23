@@ -81,7 +81,7 @@
           setLocalStorage("btnindex",2)
           this.isshow = this.getIshow();
           if(!this.isshow) {
-              this.$router.push("/orderList/" + this.userID)
+              this.$router.push("/orderList")
           }
       },
       order() {

@@ -1,23 +1,47 @@
 <template>
   <div class="orderList">
+    <pageLoaded :pageLoading = "pageLoading"></pageLoaded>
     <div class="orderListItem" v-for="(listitem,index) in orderList" :key="index" @click="handler"  :data-sernum="listitem.seri_num">
-      <p>订单编号:   {{listitem.seri_num}}</p>
-      <p>日期：{{listitem.date}}<span :class="{fntcolor:listitem.flag == 1}" >{{foodStatus(listitem)}}</span><span v-if="listitem.flag==1"></span></p>
+      <p class="bianhao">订单编号:   {{listitem.seri_num}}<span class="more"></span></p>
+      <p>日期：{{listitem.date}}</p>
+      <div>
+        <div v-for="(fitem,findex) in listitem.food" :key="index+'fcont'+findex" class="fitem">
+          <p>{{fitem.name}}</p>
+          <p>{{fitem.count}}</p>
+        </div>
+        <div class="foodstatus">
+          {{foodStatus(listitem)}}<span class="foodfire" v-if="listitem.flag == 1"></span>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </template>
 
 <script>
+  import pageLoaded from '@/components/preload-view.vue';
   export default {
     data() {
         return {
-            orderList: []
+            orderList: [],
+            userID:"",
+            pageLoading:{
+              show: true
+            },
         }
     },
+    components: {
+      pageLoaded
+    },
     mounted() {
-        console.log(this.$route.params.userID) //此处拿到对应的额UuserID
+        let self = this;
+        this.userID = localStorage.getItem("userID");
         this.$http.get('../src/mock/interface.json').then(res =>{
-            this.orderList = res.data.orderList;
+          self.orderList = res.data.orderList;
+          self.pageLoading.show = false;
+
+          console.log(self.orderList)
         }).catch(err => {
             console.log(err)
         })
@@ -32,7 +56,8 @@
         },
       handler(e) {
             var sernum = e.currentTarget.dataset.sernum;
-            this.$router.push("/orderDetail/"+sernum);
+            localStorage.setItem("orderlist",sernum);
+            this.$router.push("/goforPay");
       }
     }
   }
@@ -46,38 +71,71 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding-top: 2rem;
-
+    padding-top: 1rem;
+    background-color: skyblue;
   }
   .orderListItem {
-    margin-top: 0.8rem;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: column;
-    width: 80%;
-    justify-content: space-around;
-    border: 0.1rem solid deeppink;
-    border-radius: 5px;
-    height: 4rem;
-    padding-left: 0.8rem;
-  }
-  .orderListItem p:nth-of-type(1) {
-    font-size: 0.8rem;
-  }
-  .orderListItem p:nth-of-type(2) {
-    font-size: 0.6rem;
-  }
-  .orderListItem p span {
-    display: inline-block;
-    margin-left: 0.4rem;
-  }
-  .orderListItem p span:nth-of-type(2) {
-    border: 1px dotted red;
-    width: 10px;
-    margin-bottom: 3px;
-    margin-left: 0;
+    position: relative;
+    width: 90%;
+    height: 8rem;
+    border: 1px solid yellow;
+    margin-bottom: 0.5rem;
+    padding: 10px 13px;
+    background-color: #fff;
   }
   .fntcolor {
     color: red;
+  }
+  .fitem {
+    display: flex;
+    display: -webkit-flex;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 2px;
+    color: #A0A0A0;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .orderListItem p:nth-of-type(1) {
+    font-size: 0.9rem;
+  }
+  .orderListItem p:nth-of-type(2) {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    padding-left: 15px;
+    color: #A0A0A0;
+  }
+  .foodstatus {
+    font-size: 0.9rem;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+  }
+  .fitem p {
+    font-size: 0.8rem!important;
+  }
+  .more {
+    width:15px ;
+    height: 15px;
+    border-left: 2px solid #a0a0a0;
+    border-bottom: 2px solid #a0a0a0;
+    display: inline-block;
+    transform: rotate(-135deg);
+    position: absolute;
+    top: 14px;
+    right: 28px;
+  }
+  .bianhao {
+    margin-bottom: 10px
+  }
+  .foodfire {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../../static/fire.jpg");
+    background-size: 100% 100%;
+    margin-left: 5px;
   }
 </style>

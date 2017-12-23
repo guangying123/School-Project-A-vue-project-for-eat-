@@ -5,6 +5,11 @@
 
 export default [
   {
+    path: '/char',  //*
+    name: 'char',
+    component : resolve => require.ensure([], () => resolve(require('@/components/char.vue')), 'char')
+  },
+  {
     path: '/',  //*
     name: 'Home',
     component : resolve => require.ensure([], () => resolve(require('@/pages/Home.vue')), 'Home')
@@ -20,7 +25,7 @@ export default [
     component : resolve => require.ensure([], () => resolve(require('@/pages/order.vue')), 'order')
   },
   {
-    path: '/orderlist/:userID', //*  订单列表页
+    path: '/orderlist', //*  订单列表页
     name: 'orderlist',
     component : resolve => require.ensure([], () => resolve(require('@/pages/orderList.vue')), 'orderList')
   },
@@ -29,5 +34,9 @@ export default [
     name: 'orderDetail',
     component : resolve => require.ensure([], () => resolve(require('@/pages/orderDetail.vue')), 'orderDetail')
   },
-
+  {
+    path: '/goforPay', //*  订单详情页
+    name: 'goforPay',
+    component : resolve => require.ensure([], () => resolve(require('@/pages/goforPay.vue')), 'goforPay')
+  }
 ]
