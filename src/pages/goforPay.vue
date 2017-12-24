@@ -16,8 +16,10 @@
         </div>
       </div>
       <div class="eattype">
-        <div class="instore" @click="eattype=1"><span :class="{checked:eattype == 1}" @click="eattype=1"></span>食堂</div>
-        <div class="outstore" @click="eattype=2"><span :class="{checked:eattype == 2}" @click="eattype=2"></span>外卖</div>
+        <div v-if="orderlist" class="instore" ><span :class="{checked:eattype == 1}"></span>食堂</div>
+        <div v-else class="instore"  @click="eattype=1"><span :class="{checked:eattype == 1}" @click="eattype=1"></span>食堂</div>
+        <div v-if="orderlist" class="outstore" ><span :class="{checked:eattype == 2}"></span>外卖</div>
+        <div v-else class="outstore" @click="eattype=2"><span :class="{checked:eattype == 2}" @click="eattype=2"></span>外卖</div>
       </div>
       <div class="card" v-if="!orderlist">
         <div class="cardtitle" @click="chosecard">

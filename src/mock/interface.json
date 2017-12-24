@@ -295,6 +295,45 @@
       ]
     }
   ],
+  "cardCenter": {
+    "willuse":[
+    ],
+    "canuse":[
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      },
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      },
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      },{"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      },
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      }
+    ],
+    "used":[
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      },
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      },
+      {"cardId": "14030130042",
+        "value":10,
+        "limit":20
+      }
+    ]
+  },
   "findbyordernum":{
     "count":46,
     "eattype":2,

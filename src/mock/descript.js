@@ -21,6 +21,7 @@
 // }）
 // }
 // 5.orderList组件在mounted中请求查看历史订单接口 ，其中
+//6.cardCenter组件中，在mounted中请求卡券接口，
 
 
 

@@ -63,7 +63,11 @@
                   if(btnindex == 2) {
                     this.$router.push("/orderList/" + this.userID)
                   }else {
-                    this.$router.push("/orderMain")
+                     if(btnindex == 1)
+                    this.$router.push("/orderMain");
+                     else{
+                       this.$router.push("/cardCenter");
+                     }
                   }
               }
           },

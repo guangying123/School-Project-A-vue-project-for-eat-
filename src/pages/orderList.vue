@@ -1,7 +1,7 @@
 <template>
   <div class="orderList">
     <pageLoaded :pageLoading = "pageLoading"></pageLoaded>
-    <div class="orderListItem" v-for="(listitem,index) in orderList" :key="index" @click="handler"  :data-sernum="listitem.seri_num">
+    <div v-if="orderList.length>0" class="orderListItem" v-for="(listitem,index) in orderList" :key="index" @click="handler"  :data-sernum="listitem.seri_num">
       <p class="bianhao">订单编号:   {{listitem.seri_num}}<span class="more"></span></p>
       <p>日期：{{listitem.date}}</p>
       <div>
@@ -9,13 +9,12 @@
           <p>{{fitem.name}}</p>
           <p>{{fitem.count}}</p>
         </div>
-        <div class="foodstatus">
-          {{foodStatus(listitem)}}<span class="foodfire" v-if="listitem.flag == 1"></span>
+        <div class="foodstatus" :class="{fooddonecolor:listitem.flag == 2}">
+          {{foodStatus(listitem)}}<span class="foodfire" v-if="listitem.flag == 1"></span><span v-else class="fooddone" ></span>
         </div>
       </div>
-
-
     </div>
+    <div v-if="orderList.length==0" class="costum">暂无历史消费记录~~</div>
   </div>
 </template>
 
@@ -39,7 +38,8 @@
         this.userID = localStorage.getItem("userID");
         this.$http.get('../src/mock/interface.json').then(res =>{
           self.orderList = res.data.orderList;
-          self.pageLoading.show = false;
+//      self.orderList = [];
+      self.pageLoading.show = false;
 
           console.log(self.orderList)
         }).catch(err => {
@@ -137,5 +137,22 @@
     background: url("../../static/fire.jpg");
     background-size: 100% 100%;
     margin-left: 5px;
+  }
+  .fooddone {
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    background: url("../../static/fooddone.png");
+    background-size: 100% 100%;
+    position: relative;
+    top: 6px
+  }
+  .costum {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: #646464;
+  }
+  .fooddonecolor {
+    color: #a0a0a0;
   }
 </style>

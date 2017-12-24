@@ -5,11 +5,6 @@
 
 export default [
   {
-    path: '/char',  //*
-    name: 'char',
-    component : resolve => require.ensure([], () => resolve(require('@/components/char.vue')), 'char')
-  },
-  {
     path: '/',  //*
     name: 'Home',
     component : resolve => require.ensure([], () => resolve(require('@/pages/Home.vue')), 'Home')
@@ -20,23 +15,18 @@ export default [
     component : resolve => require.ensure([], () => resolve(require('@/pages/orderMain.vue')), 'orderMain')
   },
   {
-    path: '/order/:userID',
-    name: 'order',
-    component : resolve => require.ensure([], () => resolve(require('@/pages/order.vue')), 'order')
-  },
-  {
     path: '/orderlist', //*  订单列表页
     name: 'orderlist',
     component : resolve => require.ensure([], () => resolve(require('@/pages/orderList.vue')), 'orderList')
   },
   {
-    path: '/orderDetail/:sernum', //*  订单详情页
-    name: 'orderDetail',
-    component : resolve => require.ensure([], () => resolve(require('@/pages/orderDetail.vue')), 'orderDetail')
-  },
-  {
     path: '/goforPay', //*  订单详情页
     name: 'goforPay',
     component : resolve => require.ensure([], () => resolve(require('@/pages/goforPay.vue')), 'goforPay')
+  },
+  {
+    path: '/cardCenter', //*  订单详情页
+    name: 'cardCenter',
+    component : resolve => require.ensure([], () => resolve(require('@/pages/cardCenter.vue')), 'cardCenter')
   }
 ]

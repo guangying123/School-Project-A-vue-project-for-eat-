@@ -2,6 +2,10 @@
   <div class="contain">
     <pageLoaded :pageLoading="pageLoading"></pageLoaded>
     <div class="menu">
+      <div @click="cardCenter" class="cardCenter">
+        <div class="personhead"></div>
+        <div class="personbody"></div>
+      </div>
       <p class="great" ref="great"><span class="laba"></span><span class="kuang"><span class="greatcont" ref="greatcont">{{great}}</span></span></p>
       <HomeButton name="我要点餐" bgcolor="yellow" funname="order"  @order="order"></HomeButton>
       <div class="separ"></div>
@@ -52,6 +56,7 @@
       },
     beforeDestroy() {
       clearInterval(this.timer);
+      localStorage.removeItem("btnindex");
     },
       components: {
           HomeButton,
@@ -75,6 +80,12 @@
                 document.querySelector('.greatcont').style.left = 0 + 'px';
               },2000,false);
             },3500,false)
+        }
+      },
+      cardCenter() {
+        this.isshow = this.getIshow();
+        if(!this.isshow) {
+            this.$router.push('/cardCenter')
         }
       },
       finished() {
@@ -132,6 +143,7 @@
     border-left: 3px solid #C0C0C0;
     margin-top: 1rem;
     overflow: hidden;
+    position: relative;
   }
   .great {
     font-size: 0.8rem;
@@ -184,5 +196,28 @@
     100% {
       transform: rotate(-160deg);
     }
+  }
+  .cardCenter {
+    position: absolute;
+    text-align: center;
+    height: 20px;
+    overflow: hidden;
+    border-bottom: 1px solid #646464;
+    right: 18px;
+    top: 14px;
+  }
+  .personhead {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #646464;
+    margin: 0 auto;
+    margin-bottom: 1px;
+  }
+  .personbody {
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #646464;
   }
 </style>
