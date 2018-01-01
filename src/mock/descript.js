@@ -4,7 +4,7 @@
 
 //请求接口的地方有 （说明方式为  所在组件 + 所请求字段 + 字段一些说明 ）
 
-//1. Home  great 招呼字段  （首页将两个按钮存进了localStorage，btnindex为1代表我要点餐按钮   2为历史订单按钮）
+//1. Home  greet 招呼字段 hascard 商家是否投放了卡券字段 boolean性 （首页将两个按钮存进了localStorage，btnindex为1代表我要点餐按钮   2为历史订单按钮）
 //2.orderList orderList 所有订单的编号和时间   （订单请求需做分页懒加载）      以手机号作为区分的id号  (LocalStorage  存储)
 //3.orderMain   点餐的详情页（各种套餐和单点的页面）{
 //   接口需要拿到的数据：

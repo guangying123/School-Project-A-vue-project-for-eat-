@@ -1,24 +1,24 @@
 <template>
-    <div class="preload-view" v-if="pageLoading['show']">
-        <div class="dot">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <p class="showInfo">加载中....</p>
+  <div class="preload-view" v-if="pageLoading['show']">
+    <div class="dot">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+    <p class="showInfo">加载中....</p>
+  </div>
 </template>
 
 <script>
 
   export default {
-      name: 'preload-view',
-      props:["pageLoading"]
+    name: 'preload-view',
+    props:["pageLoading"]
   }
 
 </script>
@@ -40,8 +40,8 @@
     margin: 100px auto 30px;
   }
   .showInfo {
-      text-align: center;
-      font-size: 20px;
+    text-align: center;
+    font-size: 20px;
   }
   .dot span {
     display: inline-block;

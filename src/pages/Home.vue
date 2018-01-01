@@ -3,6 +3,7 @@
     <pageLoaded :pageLoading="pageLoading"></pageLoaded>
     <div class="menu">
       <div @click="cardCenter" class="cardCenter">
+        <div class="cardCenternotice" v-if="carnotice"></div>
         <div class="personhead"></div>
         <div class="personbody"></div>
       </div>
@@ -39,19 +40,27 @@
                 show: true
             },
             alertShow:false,
-            timer:''
+            timer:'',
+            carnotice: false
           }
       },
       mounted() {
         let self = this;
-          this.$http.get('src/mock/interface.json').then(res => {
-            self.great = res.data.Home.great;
-            self.pageLoading["show"] = false;
-            self.dealanno(); //  处理喇叭提示字超长
+          this.$http.get(this.$store.state.baseUrl + '/greet').then(res => {
+             let data = res.data;
+             if(data.error == 0){
+               self.great = data.data.greet;
+               if(data.data.carcount > 0) self.carnotice = true;
+               self.pageLoading["show"] = false;
+               self.dealanno(); //  处理喇叭提示字超长
+             }else {
+               self.alertShow = true;
+               self.pageLoading["show"] = false;
+             }
           }).catch(err =>{
-            self.alertShow = true
+            self.alertShow = true;
+            self.pageLoading["show"] = false;
               console.log(err)
-
           })
       },
     beforeDestroy() {
@@ -219,5 +228,14 @@
     width: 16px;
     height: 16px;
     border: 1px solid #646464;
+  }
+  .cardCenternotice {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background-color: red;
+    border-radius: 50%;
+    right: 0;
+    top: 1px;
   }
 </style>
