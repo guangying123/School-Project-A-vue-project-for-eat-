@@ -8,11 +8,11 @@
         <div v-for="(item, index1) in cardCenter" :key="index1"  v-show="mymap[index1] == bartype[index] ">
           <div class="tab-swiper vux-center" v-if="item.length > 0">
             <!--所有卡券的样式 -->
-            <div v-for="(titem,tindex) in item" :key="'t'+tindex" class="carditem" :data-cardid="titem.cardId" :data-index="index1" :data-cardindex="tindex" @click="handler($event)">
+            <div v-for="(titem,tindex) in item" :key="'t'+tindex" class="carditem"  :data-seri="titem.seri" :data-index="index1" :data-cardindex="tindex" @click="handler($event)">
               <div class="carditemmain">
                 <div class="carcircle" :class="{used:index1==='used'}"></div>
                 <div class="cardprice" ><span  >{{titem.value}}</span>元代金券</div>
-                <div class="carddes"  >满{{titem.limit}}元可用</div>
+                <div class="carddes"  >满{{titem.uselimit}}元可用</div>
                 <div v-if="index1==='used'" class="willuse used"><span class="getnow">已使用</span></div>
                 <div v-if="index1=='willuse'" class="willuse"><span class="getnow">立即领取</span></div>
                 <div v-if="index1=='canuse'" class="willuse" ><span class="getnow">可使用</span></div>
@@ -64,14 +64,26 @@
           let self = this;
           console.log(dataset)
         if(dataset.index == 'willuse') {
-            let carid= dataset.cardid;
+            let seri= dataset.seri; // 卡券种类
             let cardinex = dataset.cardindex;
+
           //像领取卡券接口发送用户userID信息和卡券id  需谈框显示领取成功
-
-
-          let temp = {};
-          temp = self.cardCenter. willuse.splice(cardinex,1);
-           self.cardCenter. canuse =  [...temp,...self.cardCenter. canuse];
+          this.$http.post(this.$store.state.baseUrl+'/receivecard',{
+              seri: seri,
+              userId: localStorage.getItem('userID')
+          }).then(res=>{
+              console.log(res);
+              if(res.data.error == 0) {
+                let temp = {};
+                temp = self.cardCenter. willuse.splice(cardinex,1);
+                self.cardCenter. canuse =  [...temp,...self.cardCenter. canuse];
+                alert('卡券领取成功')
+              }else {
+                alert(res.data.errmsg);
+              }
+          }).catch(err =>{
+              alert('卡券领取失败');
+          });
         }
       }
     },
@@ -79,15 +91,17 @@
           //请求卡券接口
       let userID = localStorage.getItem('userID');
       let self = this;
-      this.$http.get('../src/mock/interface.json').then(res => {
-          let cardCenter = res.data.cardCenter;
-          self.cardCenter .willuse = cardCenter.willuse;
-          self.cardCenter .canuse = cardCenter.canuse;
-           self.cardCenter .used = cardCenter.used;
-           console.log(self.cardCenter)
+      this.$http.get(this.$store.state.baseUrl+'/will_useing_used_card?userId='+userID).then(res => {
+          let mydata = res.data;
+          if(mydata.error == 0){
+              self.cardCenter .willuse = mydata.willuse ||[];
+              self.cardCenter.canuse = mydata.canuse || [];
+              self.cardCenter.used = mydata.used || [];
+          }else {
+              alert(mydata.errmsg);
+          }
       }).catch(err => {
-          console.log(err);
-
+          alert('数据加载失败')
       })
     },
     components: {

@@ -1,6 +1,15 @@
 <template>
   <div class="goforPay">
     <pageLoaded :pageLoading = "pageLoading"></pageLoaded>
+    <!--提交支付接口 -->
+    <div class="submitloading" v-show="dealtradeshow">
+      <group>
+        <cell>
+          <spinner type="bubbles" size="60px"></spinner>
+        </cell>
+        <p class="dealtrade">交易中...</p>
+      </group>
+    </div>
     <div class="goforPaymain">
       <div class="title">
         {{showtitle()}}
@@ -31,7 +40,7 @@
             <div class="carditemmain">
               <div class="carcircle"></div>
               <div class="cardprice"  ><span  >{{item.value}}</span>元代金券</div>
-              <div class="carddes"  >满{{item.limit}}元可用</div>
+              <div class="carddes"  >满{{item.uselimit}}元可用</div>
               <div class="cardcheck"  :class="'card'+index"></div>
             </div>
           </div>
@@ -58,7 +67,7 @@
 
 <script>
   import pageLoaded from '@/components/preload-view.vue';
-  import {Selector,Group} from 'vux';
+  import {Selector,Group,Spinner,Cell} from 'vux';
   export default {
       data() {
           return {
@@ -75,13 +84,20 @@
             userID:'',
             orderlist:'',
             cardlimit:0,
+            dealtradeshow:false
           }
       },
     methods: {
+          clearcarbuy(){ // 支付完成后清空购物车
+            localStorage.removeItem("buycarcount");
+            localStorage.removeItem("carfood");
+          },
           showtitle() {
             return this.orderlist ?   "订单详情：":"请再次确认您的订单：";
           },
       forPay() { //确认支付接口
+        this.dealtradeshow = true;
+        let self =this;
         let a = {};
         if(this.cardindex != -1) {   // 后端根据有没有cardId来判断前端是否使用了优惠券
             a = {...this.cardInfo[this.cardindex]};
@@ -91,7 +107,22 @@
        a.food = this.buycarcont;
        a.eattype = this.eattype;
        console.log(a);  // 需要调用支付接口，传递参数为a  后端需要生成订单编号来记录这次交易
-
+        this.$http.post(this.$store.state.baseUrl+'/mycount',a).then(res =>{
+          self.dealtradeshow = false;
+            console.log(res);
+            let data = res.data;
+            if(data.error == -1){
+                alert(data.errmsg);
+            }else {
+                alert('交易成功！');
+                self.clearcarbuy();
+                this.$router.push('/orderList');
+            }
+        }).catch(err =>{
+          self.dealtradeshow = false;
+          alert('交易失败');
+            console.log(err);
+        })
       },
       chosecarditem(e) {
           let {index,price} = e.currentTarget.dataset;
@@ -145,19 +176,20 @@
         }
         ;
         this.userID = localStorage.getItem("userID");
-        this.$http.get('src/mock/interface.json').then(res => {
+        //请求卡券接口
+        this.$http.get(this.$store.state.baseUrl+'/will_useing_used_card?userId='+this.userID).then(res => {
+          let mydata = res.data;
           self.pageLoading["show"] = false;
-          //处理掉不可用的卡券
-          let temcardInfo = res.data.youhuiCard;
-          self.cardInfo = temcardInfo.filter(val => {
-            return self.count >= val.limit;
-          });
-          console.log(self.cardInfo);
-
+          if(mydata.error == 0) {
+            let temcardInfo = mydata.canuse || [];
+            self.cardInfo = temcardInfo.filter(val => {
+              return self.count >= val.uselimit;
+            })
+          }else {
+            self.alertShow = true
+          }
         }).catch(err => {
           self.alertShow = true
-          console.log(err)
-
         })
         console.log(this.buycarcont);
       }
@@ -168,7 +200,9 @@
     components: {
       pageLoaded,
       Selector,
-      Group
+      Group,
+      Spinner,
+      Cell
     }
   }
 </script>
@@ -371,5 +405,16 @@
   }
   .ordercard {
     margin-top: 20px;
+  }
+  .submitloading {
+    position: fixed;
+    z-index: 999;
+    /* background-color: #a0a0a0; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .dealtrade{
+    text-align: center;
   }
 </style>

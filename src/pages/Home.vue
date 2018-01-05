@@ -7,12 +7,13 @@
         <div class="personhead"></div>
         <div class="personbody"></div>
       </div>
+      <div v-show="userID" class="mycount">￥{{mycount}}</div>
       <p class="great" ref="great"><span class="laba"></span><span class="kuang"><span class="greatcont" ref="greatcont">{{great}}</span></span></p>
       <HomeButton name="我要点餐" bgcolor="yellow" funname="order"  @order="order"></HomeButton>
       <div class="separ"></div>
       <HomeButton name="已点订单" bgcolor="skyblue" funname="finished"  @finished="finished" id="main"></HomeButton>
     </div>
-    <myAlert title="温馨提示~" des="请输入你的手机号"  :isshow="isshow" @hiddleAlert="hiddleAlert">
+    <myAlert title="温馨提示~" des="请输入你的手机号"  :isshow="isshow" @hiddleAlert="hiddleAlert" >
     </myAlert>
     <div v-transfer-dom>
       <Alert v-model="alertShow" title="出错啦~" button-text="确定" content="数据拉取失败"  hide-on-blur></Alert>
@@ -41,7 +42,8 @@
             },
             alertShow:false,
             timer:'',
-            carnotice: false
+            carnotice: false,
+            mycount:0// 账户余额
           }
       },
       mounted() {
@@ -62,6 +64,8 @@
             self.pageLoading["show"] = false;
               console.log(err)
           })
+        this.getmycount();//请求账户余额
+
       },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -74,6 +78,22 @@
           Alert
       },
     methods: {
+        getmycount() { // 请求账户余额接口
+          let self = this;
+          this.userID = getLocalStorage("userID");
+          if(this.userID){ // 请求账户接口
+            this.$http.get(this.$store.state.baseUrl+'/mycount?userId='+this.userID).then(res=>{
+                console.log(res);
+              if(res.data.error == -1){
+                  alert('账户余额加载失败');
+              }else {
+                  self.mycount = res.data.data.mycount;
+              }
+            }).catch(err=>{
+              alert('账户余额加载失败');
+            })
+          }
+        },
       dealanno() {
         let self = this;
         let great = this.$refs.great;
@@ -212,7 +232,7 @@
     height: 20px;
     overflow: hidden;
     border-bottom: 1px solid #646464;
-    right: 18px;
+    right: 60px;
     top: 14px;
   }
   .personhead {
@@ -237,5 +257,12 @@
     border-radius: 50%;
     right: 0;
     top: 1px;
+  }
+  .mycount {
+    position: absolute;
+    top: 16px;
+    right: 17px;
+    font-size: 14px;
+    color: #A0A0A0;
   }
 </style>

@@ -8,7 +8,7 @@
         <!--左边点餐菜单栏-->
         <div class="orderMainmenu">
           <div v-for="(item,index) in orderMaindata" :key="'menu'+index" class="menuitem" >
-            <p :data-type="index" @click="dealmenu($event)">{{item.type}}</p>
+            <p :data-type="index" @click="dealmenu($event)" :class="{mycolor:index==0}">{{item.type}}</p>
           </div>
         </div>
         <!--右边菜品展示栏-->
@@ -17,7 +17,7 @@
             <img :src="item.img"  class="foodimg"/>
             <div class="menshowright">
                <p class="foodname">{{item.name}}</p>
-              <p class="fooddesc">{{item.desc}}</p>
+              <p class="fooddesc">{{item.des}}</p>
               <p class="foodprice">￥：{{item.price}}</p>
               <div class="buy" @click="addtobuycar($event)"  :data-foodindex="index">
                 <div class="hangshu shu" :data-foodindex="index"></div>
@@ -44,13 +44,13 @@
             </div>
             <div class="rightoper">
               <span>￥{{item.price}}</span>
-              <div class="cardetailjian" :data-fid="item.id" data-switcher="0" @click="cardeal($event)">
-                <div class="carhang" :data-fid="item.id" data-switcher="0" ></div>
+              <div class="cardetailjian" :data-fid="item.foodid" data-switcher="0" @click="cardeal($event)">
+                <div class="carhang" :data-fid="item.foodid" data-switcher="0" ></div>
               </div>
               <div>{{item.count}}</div>
-              <div class="cardetailjia" :data-fid="item.id" data-switcher="1" @click="cardeal($event)">
-                <div class="carjiahang" :data-fid="item.id" data-switcher="1" ></div>
-                <div class="carjiashu" :data-fid="item.id" data-switcher="1" ></div>
+              <div class="cardetailjia" :data-fid="item.foodid" data-switcher="1" @click="cardeal($event)">
+                <div class="carjiahang" :data-fid="item.foodid" data-switcher="1" ></div>
+                <div class="carjiashu" :data-fid="item.foodid" data-switcher="1" ></div>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@
             buycarcount:0,
             buycarcont:[],
             showcarde:false,
-            msg: ""
+            msg: "",
           }
       },
     components:{
@@ -121,7 +121,7 @@
           var buyfood = "";
           let self = this;
           this.buycarcont.forEach(val => {
-            let pinjie ="id="+val.id+"&"+"name="+val.name+"&"+"price="+val.price+"&"+"count="+val.count+"#";
+            let pinjie ="foodid="+val.foodid+"&"+"name="+val.name+"&"+"price="+val.price+"&"+"count="+val.count+"#";
             buyfood+=pinjie;
           })
           buyfood = buyfood.slice(0,buyfood.length-1);
@@ -133,13 +133,14 @@
         }
       }  ,
       cardeal(e) { // 0代表减  1代表加
+        console.log(e);
         let self = this;
           let evedata = e.target.dataset;
           let fdid = evedata.fid;
           let sw = evedata.switcher;
           let delinex = -1;
         this.buycarcont = this.buycarcont.map((val,index) => {
-            if(val.id == fdid) {
+            if(val.foodid == fdid) {
                 if(sw == 1){
                     val.count++;
                    self.buycarcount++;
@@ -207,15 +208,15 @@
           this.count+= addfood.price;
           let flag = false;
           this.buycarcont = this.buycarcont.map(val => {
-              if(val.id == addfood.id) {
+              if(val.foodid == addfood.foodid) {
                   flag = true;
                   val.count++;
               }
               return val;
           });
           if(!flag) {
-            let {id,price,name,count=1} = addfood;
-            this.buycarcont = [{id,price,name,count},...this.buycarcont]
+            let {foodid,price,name,count=1} = addfood;
+            this.buycarcont = [{foodid,price,name,count},...this.buycarcont]
           }
           this.buycarcount++;
       },
@@ -250,28 +251,90 @@
           let activeindex = Number(this.menuflag)+1;
           let test =  document.querySelector('.orderMainmenu div:nth-of-type('+activeindex+')');
           test.style.backgroundColor = '#ffffff';
+      },
+      getfood() {
+        let self = this;
+        this.$http.get(this.$store.getters.getbaseUrl+'/orderMainfood').then(res =>{
+            console.log(res);
+            let data = res.data;
+            if(data.error == -1){
+                alert(data.errmsg);
+                return;
+            }else{
+                let orderMaintemp = new Array(8);
+                let orderMaintemplen = orderMaintemp.length;
+                let mymap = {'热销':0,'炒菜':1,'凉菜':2,'盖浇饭':3,'汤类':4,'小吃':5,'主食':6,'饮品':7};
+                data.data.forEach(val =>{
+                  orderMaintemp[mymap[val.type]] = val;
+                })
+                for(let i =0;i<orderMaintemplen;i++){
+                    console.log(orderMaintemp[i])
+                    if(!orderMaintemp[i]) {
+                      let mtem = Object.entries(mymap).filter(mval=>{ return mval[1]==i });
+                      orderMaintemp[i] = {};
+                      orderMaintemp[i].type = mtem[0][0];
+                        orderMaintemp[i].detail = []
+                    }
+                }
+              self.orderMaindata = orderMaintemp || [];
+              self.pageLoading.show = false;
+              self.mytestcardtotaldata = self.orderMaindata[0].detail.slice(10);
+              self.mytestcard = self.orderMaindata[0].detail.slice(0,10);
+              if(self.mytestcardtotaldata.length == 0) {
+                self.lazyloadflag = false;
+              }
+              self.lazyload();
+              self.getbuycarfromStorage();
+            }
+        }).catch(err=>{
+            console.log(err);
+            alert('数据加载失败');
+        })
+
+      },
+      getforlunbo() {
+          let self = this;
+          this.$http.get(this.$store.getters.getbaseUrl+'/lunboimg').then(res=>{
+              let data  = res.data;
+              if(data.error == 0){
+
+                self.lblist  = data.data.map(val =>{
+                    return {img:val.lbimg};
+                });
+              }else {
+                alert(data.errmsg);
+              }
+          }).catch(err =>{
+              console.log(err);
+              alert('轮播图数据加载失败');
+          })
+
       }
     },
     mounted() {
         let self = this;
         this.pageLoading.show = true;
         self.lbheight = (document.documentElement.clientHeight - 21.2*((document.documentElement.clientWidth/320)*20))+'px'; //设置轮播图的尺寸
-      this.$http.get('src/mock/interface.json').then(res => {
-          self.orderMaindata = res.data.orderMain || [];
-          self.pageLoading.show = false;
-          self.mytestcardtotaldata = self.orderMaindata[0].detail.slice(10);
-          self.mytestcard = self.orderMaindata[0].detail.slice(0,10);
-          if(self.mytestcardtotaldata.length == 0) {
-              self.lazyloadflag = false;
-          }
-          self.lblist  = res.data.lblist;
-          self.lazyload();
-          self.getbuycarfromStorage();
-      }).catch(err => {
-          self.alertShow = true;
-          self.msg = "数据拉取失败";
-          console.log(err);
-      })
+        //请求获取轮播图接口
+       this.getforlunbo();
+       //请求食品接口
+      this. getfood();
+
+//      this.$http.get('src/mock/interface.json').then(res => {
+//          self.orderMaindata = res.data.orderMain || [];
+//          self.pageLoading.show = false;
+//          self.mytestcardtotaldata = self.orderMaindata[0].detail.slice(10);
+//          self.mytestcard = self.orderMaindata[0].detail.slice(0,10);
+//          if(self.mytestcardtotaldata.length == 0) {
+//              self.lazyloadflag = false;
+//          }
+//          self.lazyload();
+//          self.getbuycarfromStorage();
+//      }).catch(err => {
+//          self.alertShow = true;
+//          self.msg = "数据拉取失败";
+//          console.log(err);
+//      })
     },
     beforeDestroy() {
         this.setcarfoodinLocalStorage();
@@ -281,6 +344,9 @@
 </script>
 
 <style scoped>
+  .mycolor {
+    color: #f60
+  }
   .hangshu  {
     position: absolute;
     background-color: #ffffff;
@@ -346,7 +412,7 @@
     color:#999;
     font-size: 0.7rem;
     text-align: center;
-    padding-top:2px;
+    padding-top:10px;
     padding-bottom: 2px;
   }
   .load {
