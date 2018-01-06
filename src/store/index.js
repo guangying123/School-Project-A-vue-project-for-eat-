@@ -10,7 +10,8 @@ Vue.use(vuex);
 
 
 const state = {
-  baseUrl:'http://localhost:3000'
+  // baseUrl:'http://localhost:3000'
+  baseUrl:'http://192.168.43.126:3000'
 };
 
 export default new vuex.Store({

@@ -20,7 +20,7 @@
           <div class="left">
             <span class="price">￥{{item.price}}</span>
             <span class="separ"></span>
-            <span><span class="fdcount">{{item.count}}</span>个</span>
+            <span><span class="fdcount" v-if="!orderlist">{{item.count}}</span><span class="fdcount" v-else>{{item.fdcount}}</span>个</span>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div v-if="orderlist & cardlimit" class="ordercard">
+      <div v-if="orderlist && cardlimit" class="ordercard">
         <div class="carditemmain">
           <div class="carcircle" style="background-color: #A0A0A0"></div>
           <div class="cardprice"  ><span  >{{card}}</span>元代金券</div>
@@ -60,6 +60,9 @@
       </div>
       <div class="ensure" @click="forPay" v-if="!orderlist">
         确认支付
+      </div>
+      <div v-if="orderlist" class="ensure" @click="tradedone">
+        订单完成
       </div>
     </div>
   </div>
@@ -88,6 +91,16 @@
           }
       },
     methods: {
+          tradedone(){ // 订单完成接口
+            //orderlist 即为订单编号,根据订单编号，将flag置为2即可
+
+
+
+
+
+
+
+          },
           clearcarbuy(){ // 支付完成后清空购物车
             localStorage.removeItem("buycarcount");
             localStorage.removeItem("carfood");
@@ -143,21 +156,29 @@
       let self = this;
       this.orderlist = localStorage.getItem('orderlist');
       if(this.orderlist) {   //根据订单编号请求订单详情接口
-
-        this.$http.get('src/mock/interface.json').then(res => {
+        this.$http.get(this.$store.state.baseUrl+'/orderhistory?userId='+localStorage.getItem("userID")+'&flag=2&orderseri='+this.orderlist).then(res => {
+            let cardetaildata = res.data;
+            console.log('itis herer')
+            console.log(res);
           self.pageLoading["show"] = false;
-          let orderlist = res.data.findbyordernum;
-          self.count = orderlist.count;
-          self.eattype = orderlist.eattype;
-          self.buycarcont = orderlist.food;
-          if(orderlist.limit) {  //代表本次交易使用了优惠券
-              self.card = orderlist.value;
-              self. cardlimit = orderlist.limit;
+          if(cardetaildata.error == -1){
+              alert('数据加载失败！');
+          }else {
+                 let orderlist = cardetaildata.data;
+                  self.count = orderlist.count;
+                  self.eattype = orderlist.eattype;
+                  self.buycarcont = orderlist.food;
+                  if(orderlist.uselimit) {  //代表本次交易使用了优惠券
+                    self.card = orderlist.value;
+                    self.cardlimit = orderlist.uselimit;
+                 }
           }
         }).catch(err => {
           self.alertShow = true
           console.log(err)
         })
+
+
       }else {
         let carfd = localStorage.getItem("carfood");
         if (carfd) {

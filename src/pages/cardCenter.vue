@@ -88,23 +88,24 @@
       }
     },
     mounted() {
-          //请求卡券接口
-      let userID = localStorage.getItem('userID');
-      let self = this;
-      this.$http.get(this.$store.state.baseUrl+'/will_useing_used_card?userId='+userID).then(res => {
-          let mydata = res.data;
-          if(mydata.error == 0){
-              self.cardCenter .willuse = mydata.willuse ||[];
-              self.cardCenter.canuse = mydata.canuse || [];
-              self.cardCenter.used = mydata.used || [];
-          }else {
-              alert(mydata.errmsg);
-          }
-      }).catch(err => {
-          alert('数据加载失败')
-      })
-    },
-    components: {
+
+            //请求卡券接口
+            let userID = localStorage.getItem('userID');
+            let self = this;
+            this.$http.get(this.$store.state.baseUrl+'/will_useing_used_card?userId='+userID).then(res => {
+              let mydata = res.data;
+              if(mydata.error == 0){
+                self.cardCenter .willuse = mydata.willuse ||[];
+                self.cardCenter.canuse = mydata.canuse || [];
+                self.cardCenter.used = mydata.used || [];
+              }else {
+                alert(mydata.errmsg);
+              }
+            }).catch(err => {
+              alert('数据加载失败')
+            })
+          },
+          components: {
           Tab,
           TabItem,
           Swiper,

@@ -2,12 +2,12 @@
   <div class="orderList">
     <pageLoaded :pageLoading = "pageLoading"></pageLoaded>
     <div v-if="orderList.length>0" class="orderListItem" v-for="(listitem,index) in orderList" :key="index" @click="handler"  :data-sernum="listitem.seri_num">
-      <p class="bianhao">订单编号:   {{listitem.seri_num}}<span class="more"></span></p>
+      <p class="bianhao">订单编号:  {{listitem.seri_num}}{{getdate()}}<span class="more"></span></p>
       <p>日期：{{listitem.date}}</p>
       <div>
         <div v-for="(fitem,findex) in listitem.food" :key="index+'fcont'+findex" class="fitem">
           <p>{{fitem.name}}</p>
-          <p>{{fitem.count}}</p>
+          <p>{{fitem.fdcount}}</p>
         </div>
         <div class="foodstatus" :class="{fooddonecolor:listitem.flag == 2}">
           {{foodStatus(listitem)}}<span class="foodfire" v-if="listitem.flag == 1"></span><span v-else class="fooddone" ></span>
@@ -36,17 +36,29 @@
     mounted() {
         let self = this;
         this.userID = localStorage.getItem("userID");
-        this.$http.get('../src/mock/interface.json').then(res =>{
-          self.orderList = res.data.orderList;
-//      self.orderList = [];
-      self.pageLoading.show = false;
-
-          console.log(self.orderList)
+        this.$http.get(this.$store.state.baseUrl+'/orderhistory?userId='+this.userID+'&flag=1').then(res =>{
+            console.log('myres');
+            console.log(res);
+            let mydata = res.data;
+            if(mydata.error == -1){
+                alert(mydata.errmsg);
+            }else{
+              self.orderList = mydata.data;
+              console.log(mydata);
+              console.log('~~~~')
+              console.log(self.orderList);
+            }
+          self.pageLoading.show = false;
         }).catch(err => {
-            console.log(err)
+            console.log(err);
+            alert('数据加载失败!')
         })
     },
     methods: {
+        getdate(){
+          let md = new Date();
+          return md.getFullYear()+""+(Number(md.getMonth())+1)+md.getDate();
+        },
         foodStatus(dat) {
             switch (dat.flag) {
               case '1': return "制作中";
