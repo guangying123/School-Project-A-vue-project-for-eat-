@@ -1,21 +1,21 @@
-1.ExpressÖĞÈçºÎÖ§³Ö´úÂëµÄÈÈ¸üĞÂ£¬routerÖĞĞŞ¸ÄÎŞ·¨¼°Ê±·´Ó³£¬ĞèÖØÆô·şÎñÆ÷ ¡£
-2.Node.jsÖĞ¿ªÆôÊÂÎñ¶à²ãÇ¶Ì×ÎÊÌâ;
-3.cardId  timestamp not null unique£» ÉèÖÃcardIdÎªÊ±¼ä´Á£¬¸üĞÂ¿¨È¯ĞÅÏ¢ºóÊ±¼ä´ÁÍ¬Ê±¸üĞÂ.
-4.https://github.com/mysqljs/mysql#transactions  Node.js-mysqlÖĞµÄÊÂÎñ
-5.group by X·µ»ØÊı¾İÖ»ÏÔÊ¾Ã¿×éµÄµÚÒ»¸öÊı¾İ£¬½â¾ö·½·¨order by X.
-6.Promise½â¾ö»Øµ÷ÎÊÌâ
-7.httpµÄoptionsÖĞ¼ä×´Ì¬
-8.mysqlÖĞµÄtimeStampÀàĞÍ²åÈëµÄÊı¾İ±ÈJS´úÂë¶Á³öÀ´µÄÊı¾İ¿ì8¸öĞ¡Ê±¡£
+ï»¿1.Expressä¸­å¦‚ä½•æ”¯æŒä»£ç çš„çƒ­æ›´æ–°ï¼Œrouterä¸­ä¿®æ”¹æ— æ³•åŠæ—¶åæ˜ ï¼Œéœ€é‡å¯æœåŠ¡å™¨ ã€‚
+2.Node.jsä¸­å¼€å¯äº‹åŠ¡å¤šå±‚åµŒå¥—é—®é¢˜;
+3.cardId  timestamp not null uniqueï¼› è®¾ç½®cardIdä¸ºæ—¶é—´æˆ³ï¼Œæ›´æ–°å¡åˆ¸ä¿¡æ¯åæ—¶é—´æˆ³åŒæ—¶æ›´æ–°.
+4.https://github.com/mysqljs/mysql#transactions  Node.js-mysqlä¸­çš„äº‹åŠ¡
+5.group by Xè¿”å›æ•°æ®åªæ˜¾ç¤ºæ¯ç»„çš„ç¬¬ä¸€ä¸ªæ•°æ®ï¼Œè§£å†³æ–¹æ³•order by X.
+6.Promiseè§£å†³å›è°ƒé—®é¢˜
+7.httpçš„optionsä¸­é—´çŠ¶æ€
+8.mysqlä¸­çš„timeStampç±»å‹æ’å…¥çš„æ•°æ®æ¯”JSä»£ç è¯»å‡ºæ¥çš„æ•°æ®å¿«8ä¸ªå°æ—¶ã€‚
  http://www.jspkongjian.net/news.jsp?id=906
 
 
 
 
-ÉèÖÃÎªÔÚÏß¿ÉÌåÑé·½Ê½£º
-step1:expressÖĞµÄwwwÖĞĞŞ¸ÄIp
-step2.ĞŞ¸ÄexpressÖĞmaincofigÖĞµÄbaseUrlÖĞµÄÎªhttp://changyangguang.xyz:3000/£¨»»ÎªIp£©
-step3:ĞŞ¸ÄvueÖĞµÄconfigÖĞµÄÓòÃû£¨»»ÎªIp£©
-setp4:ĞŞ¸ÄvueÖĞµÄstoreÖĞµÄbaseUrlÎªhttp://changyangguang.xyz:3000(»»ÎªIp)£»
+è®¾ç½®ä¸ºåœ¨çº¿å¯ä½“éªŒæ–¹å¼ï¼š
+step1:expressä¸­çš„wwwä¸­ä¿®æ”¹Ip
+step2.ä¿®æ”¹expressä¸­maincofigä¸­çš„baseUrlä¸­çš„ä¸ºhttp://changyangguang.xyz:3000/ï¼ˆæ¢ä¸ºIpï¼‰
+step3:ä¿®æ”¹vueä¸­çš„configä¸­çš„åŸŸåï¼ˆæ¢ä¸ºIpï¼‰
+setp4:ä¿®æ”¹vueä¸­çš„storeä¸­çš„baseUrlä¸ºhttp://changyangguang.xyz:3000(æ¢ä¸ºIp)ï¼›
 
 
 
