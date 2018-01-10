@@ -1,0 +1,9 @@
+1.分别cd到eatr前后端代码目录后，在命令行下执行npm install 安装所有的依赖。
+2.保证自己的电脑和手机连到同一个网段下（同一wifi即可）
+3.windows下通过ipconfig查出自己电脑的ip。
+4.express后端中:
+	a.修改www文件中的app.set('host',IP)(IP位置填入你上面查出的IP);
+	b.修改maincofig中的baseUrl中的为http://IP:3000/(你的IP)；
+5.前端修改：
+        a.vue中的config中的域名（换为Ip）
+        b.修改vue中的store中的baseUrl为http://IP:3000(换为Ip)；

@@ -1,0 +1,29 @@
+1.Express中如何支持代码的热更新，router中修改无法及时反映，需重启服务器 。
+2.Node.js中开启事务多层嵌套问题;
+3.cardId  timestamp not null unique； 设置cardId为时间戳，更新卡券信息后时间戳同时更新.
+4.https://github.com/mysqljs/mysql#transactions  Node.js-mysql中的事务
+5.group by X返回数据只显示每组的第一个数据，解决方法order by X.
+6.Promise解决回调问题
+7.http的options中间状态
+8.mysql中的timeStamp类型插入的数据比JS代码读出来的数据快8个小时。
+ http://www.jspkongjian.net/news.jsp?id=906
+
+
+
+
+设置为在线可体验方式：
+step1:express中的www中修改Ip
+step2.修改express中maincofig中的baseUrl中的为http://changyangguang.xyz:3000/（换为Ip）
+step3:修改vue中的config中的域名（换为Ip）
+setp4:修改vue中的store中的baseUrl为http://changyangguang.xyz:3000(换为Ip)；
+
+
+
+
+
+
+
+
+
+
+
